@@ -8,3 +8,14 @@ Run installation of dependencies.
 ```sh
 $ npm install
 ```
+
+## Deployment
+
+ENV:
+ - dev
+
+Deploying all functions including resources
+
+```sh
+$ npm run deploy {env}
+```
