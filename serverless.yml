@@ -1,25 +1,46 @@
 service: serverless-simple-crm-api
 
+plugins:
+  - serverless-dotenv-plugin
+custom:
+  dotenv:
+    logging: false
+    include:
+      - LOG_LEVEL
+
 provider:
   name: aws
   runtime: nodejs12.x
-  region: eu-west-1
+  region: ${self:provider.custom.config.${self:provider.stage}.region}
   stage: ${opt:stage, "dev"}
   profile: ${env:AWS_PROFILE}
   timeout: 900
   environment:
     NODE_ENV: ${opt:stage, "dev"}
   custom:
-    prefix: ${self:provider.stage}-user-api
+    prefix: ${self:provider.stage}-crm-api
     description: "Simple CRM Serverless API"
     config:
       dev:
-        account: ${self:provider.account}
-        region: ${self:provider.region}
+        region: eu-west-1
 
 package:
   individually: true
+  exclude:
+    - ./*
+
+  layers:
+    APINodeModules:
+      compatibleRuntimes:
+        - nodejs12
+      path: layers/api
+      package:
+        include:
+          - ./*
+      name: ${self:provider.custom.prefix}-node_modules
+      description: Layer including CRM API production node modules
 
 functions:
   hello:
-    handler: handler.hello
+    handler: api/handler.hello
+    description: function that says hello when POST to its API Gateway endpoint
