@@ -42,4 +42,5 @@ package:
 
 functions:
   hello:
-    handler: handler.hello
+    handler: api/handler.hello
+    description: function that says hello when POST to its API Gateway endpoint
