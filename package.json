@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Simple CRM Serverless API",
   "scripts": {
+    "deploy": "npx serverless deploy -s",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
