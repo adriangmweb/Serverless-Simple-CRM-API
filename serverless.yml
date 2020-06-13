@@ -11,19 +11,18 @@ custom:
 provider:
   name: aws
   runtime: nodejs12.x
-  region: eu-west-1
+  region: ${self:provider.custom.config.${self:provider.stage}.region}
   stage: ${opt:stage, "dev"}
   profile: ${env:AWS_PROFILE}
   timeout: 900
   environment:
     NODE_ENV: ${opt:stage, "dev"}
   custom:
-    prefix: ${self:provider.stage}-user-api
+    prefix: ${self:provider.stage}-crm-api
     description: "Simple CRM Serverless API"
     config:
       dev:
-        account: ${self:provider.account}
-        region: ${self:provider.region}
+        region: eu-west-1
 
 package:
   individually: true
