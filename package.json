@@ -13,6 +13,7 @@
   "author": "adrian gm",
   "license": "ISC",
   "devDependencies": {
-    "serverless": "^1.72.0"
+    "serverless": "^1.72.0",
+    "serverless-dotenv-plugin": "^2.4.2"
   }
 }

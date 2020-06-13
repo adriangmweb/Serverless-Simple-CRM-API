@@ -1,5 +1,13 @@
 service: serverless-simple-crm-api
 
+plugins:
+  - serverless-dotenv-plugin
+custom:
+  dotenv:
+    logging: false
+    include:
+      - LOG_LEVEL
+
 provider:
   name: aws
   runtime: nodejs12.x
