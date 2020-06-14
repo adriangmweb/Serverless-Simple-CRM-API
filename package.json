@@ -15,7 +15,14 @@
   "author": "adrian gm",
   "license": "ISC",
   "devDependencies": {
+    "sequelize-cli": "^5.5.1",
     "serverless": "^1.72.0",
     "serverless-dotenv-plugin": "^2.4.2"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^8.2.0",
+    "mysql2": "^2.1.0",
+    "sequelize": "^5.21.12"
   }
 }
