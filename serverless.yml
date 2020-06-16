@@ -33,16 +33,16 @@ package:
   exclude:
     - ./*
 
-  layers:
-    APINodeModules:
-      compatibleRuntimes:
-        - nodejs12
-      path: layers/api
-      package:
-        include:
-          - ./*
-      name: ${self:provider.custom.prefix}-node_modules
-      description: Layer including CRM API production node modules
+layers:
+  APINodeModules:
+    compatibleRuntimes:
+      - nodejs
+    path: layers/api
+    package:
+      include:
+        - ./**
+    name: ${self:provider.custom.prefix}-node_modules
+    description: Layer including CRM API production node modules
 
 functions:
   hello:
