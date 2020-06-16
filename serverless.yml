@@ -51,6 +51,20 @@ layers:
     description: Layer including CRM API production node modules
 
 functions:
+  login:
+    handler: api/auth/handler.login
+    description: Login function
+    layers:
+      - { Ref: APINodeModulesLambdaLayer }
+    environment:
+      JWT_SECRET_KEY: ${env:JWT_SECRET_KEY}
+    package:
+      include:
+        - api/auth/**
+    events:
+      - http:
+          path: login
+          method: post
   createUser:
     handler: api/users/handler.create
     description: "Get a single user"
