@@ -14,9 +14,13 @@ provider:
   region: ${self:provider.custom.config.${self:provider.stage}.region}
   stage: ${opt:stage, "dev"}
   profile: ${env:AWS_PROFILE}
-  timeout: 900
+  timeout: 30
   environment:
     NODE_ENV: ${opt:stage, "dev"}
+    MYSQL_DATABASE: ${env:MYSQL_DATABASE}
+    MYSQL_USER: ${env:MYSQL_USER}
+    MYSQL_PASSWORD: ${env:MYSQL_PASSWORD}
+    MYSQL_HOST: ${env:MYSQL_HOST}
   custom:
     prefix: ${self:provider.stage}-crm-api
     description: "Simple CRM Serverless API"
@@ -27,20 +31,83 @@ provider:
 package:
   individually: true
   exclude:
-    - ./*
+    - ./**
+  include:
+    - config/*
+    - database/models/*
+    - lib/*
+    - helpers/*
+    - services/*
 
-  layers:
-    APINodeModules:
-      compatibleRuntimes:
-        - nodejs12
-      path: layers/api
-      package:
-        include:
-          - ./*
-      name: ${self:provider.custom.prefix}-node_modules
-      description: Layer including CRM API production node modules
+layers:
+  APINodeModules:
+    compatibleRuntimes:
+      - nodejs
+    path: layers/api
+    package:
+      include:
+        - ./**
+    name: ${self:provider.custom.prefix}-node_modules
+    description: Layer including CRM API production node modules
 
 functions:
-  hello:
-    handler: api/handler.hello
-    description: function that says hello when POST to its API Gateway endpoint
+  createUser:
+    handler: api/users/handler.create
+    description: "Get a single user"
+    layers:
+      - { Ref: APINodeModulesLambdaLayer }
+    package:
+      include:
+        - api/users/**
+    events:
+      - http:
+          path: users/create
+          method: post
+  getUser:
+    handler: api/users/handler.get
+    description: "Get a single user"
+    layers:
+      - { Ref: APINodeModulesLambdaLayer }
+    package:
+      include:
+        - api/users/**
+    events:
+      - http:
+          path: user/{userId}
+          method: get
+  removeUser:
+    handler: api/users/handler.remove
+    description: "List all users function"
+    layers:
+      - { Ref: APINodeModulesLambdaLayer }
+    package:
+      include:
+        - api/users/**
+    events:
+      - http:
+          path: users/remove
+          method: post
+  updateUser:
+    handler: api/users/handler.update
+    description: "List all users function"
+    layers:
+      - { Ref: APINodeModulesLambdaLayer }
+    package:
+      include:
+        - api/users/**
+    events:
+      - http:
+          path: users/update
+          method: post
+  listUsers:
+    handler: api/users/handler.list
+    description: "List all users function"
+    layers:
+      - { Ref: APINodeModulesLambdaLayer }
+    package:
+      include:
+        - api/users/**
+    events:
+      - http:
+          path: users
+          method: get

@@ -5,6 +5,7 @@
   "scripts": {
     "deploy": "npx serverless deploy -s",
     "prepare-layer": "./.bin/prepareLayer.sh",
+    "local": "npx serverless invoke local -f",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
