@@ -54,7 +54,6 @@ module.exports.login = async (event) => {
     }
     return errorReporter({ statusCode: 404, response: 'User not found.' })
   } catch (error) {
-    console.log({ error })
-    throw error
+    return errorReporter(error)
   }
 }

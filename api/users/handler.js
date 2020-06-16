@@ -17,7 +17,7 @@ module.exports.get = async (event) => {
       body: JSON.stringify(user),
     };
   } catch (error) {
-    errorReporter(error)
+    return errorReporter(error)
   }
 };
 
