@@ -101,6 +101,9 @@ functions:
       - http:
           path: users/create
           method: post
+          authorizer:
+            name: adminAuthorizer
+            resultTtlInSeconds: 0
   getUser:
     handler: api/users/handler.get
     description: "Get a single user"
@@ -113,6 +116,9 @@ functions:
       - http:
           path: user/{userId}
           method: get
+          authorizer:
+            name: adminAuthorizer
+            resultTtlInSeconds: 0
   removeUser:
     handler: api/users/handler.remove
     description: "List all users function"
@@ -125,6 +131,9 @@ functions:
       - http:
           path: users/remove
           method: post
+          authorizer:
+            name: adminAuthorizer
+            resultTtlInSeconds: 0
   updateUser:
     handler: api/users/handler.update
     description: "List all users function"
@@ -137,6 +146,9 @@ functions:
       - http:
           path: users/update
           method: post
+          authorizer:
+            name: adminAuthorizer
+            resultTtlInSeconds: 0
   listUsers:
     handler: api/users/handler.list
     description: "List all users function"
@@ -149,3 +161,6 @@ functions:
       - http:
           path: users
           method: get
+          authorizer:
+            name: adminAuthorizer
+            resultTtlInSeconds: 0
