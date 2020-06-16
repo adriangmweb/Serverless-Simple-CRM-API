@@ -14,9 +14,13 @@ provider:
   region: ${self:provider.custom.config.${self:provider.stage}.region}
   stage: ${opt:stage, "dev"}
   profile: ${env:AWS_PROFILE}
-  timeout: 900
+  timeout: 30
   environment:
     NODE_ENV: ${opt:stage, "dev"}
+    MYSQL_DATABASE: ${env:MYSQL_DATABASE}
+    MYSQL_USER: ${env:MYSQL_USER}
+    MYSQL_PASSWORD: ${env:MYSQL_PASSWORD}
+    MYSQL_HOST: ${env:MYSQL_HOST}
   custom:
     prefix: ${self:provider.stage}-crm-api
     description: "Simple CRM Serverless API"
