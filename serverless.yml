@@ -51,6 +51,63 @@ layers:
     description: Layer including CRM API production node modules
 
 functions:
-  hello:
-    handler: api/handler.hello
-    description: function that says hello when POST to its API Gateway endpoint
+  createUser:
+    handler: api/users/handler.create
+    description: "Get a single user"
+    layers:
+      - { Ref: APINodeModulesLambdaLayer }
+    package:
+      include:
+        - api/users/**
+    events:
+      - http:
+          path: users/create
+          method: post
+  getUser:
+    handler: api/users/handler.get
+    description: "Get a single user"
+    layers:
+      - { Ref: APINodeModulesLambdaLayer }
+    package:
+      include:
+        - api/users/**
+    events:
+      - http:
+          path: user/{userId}
+          method: get
+  removeUser:
+    handler: api/users/handler.remove
+    description: "List all users function"
+    layers:
+      - { Ref: APINodeModulesLambdaLayer }
+    package:
+      include:
+        - api/users/**
+    events:
+      - http:
+          path: users/remove
+          method: post
+  updateUser:
+    handler: api/users/handler.update
+    description: "List all users function"
+    layers:
+      - { Ref: APINodeModulesLambdaLayer }
+    package:
+      include:
+        - api/users/**
+    events:
+      - http:
+          path: users/update
+          method: post
+  listUsers:
+    handler: api/users/handler.list
+    description: "List all users function"
+    layers:
+      - { Ref: APINodeModulesLambdaLayer }
+    package:
+      include:
+        - api/users/**
+    events:
+      - http:
+          path: users
+          method: get
