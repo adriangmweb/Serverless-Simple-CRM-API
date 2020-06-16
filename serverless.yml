@@ -51,6 +51,44 @@ layers:
     description: Layer including CRM API production node modules
 
 functions:
+  adminAuthorizer:
+    handler: api/auth/handler.adminAuth
+    description: Authorizer function
+    layers:
+      - { Ref: APINodeModulesLambdaLayer }
+    environment:
+      JWT_SECRET_KEY: ${env:JWT_SECRET_KEY}
+    package:
+      include:
+        - api/auth/**
+      exclude:
+        - /**
+  userAuthorizer:
+    handler: api/auth/handler.auth
+    description: Authorizer function
+    layers:
+      - { Ref: APINodeModulesLambdaLayer }
+    environment:
+      JWT_SECRET_KEY: ${env:JWT_SECRET_KEY}
+    package:
+      include:
+        - api/auth/**
+      exclude:
+        - /**
+  login:
+    handler: api/auth/handler.login
+    description: Login function
+    layers:
+      - { Ref: APINodeModulesLambdaLayer }
+    environment:
+      JWT_SECRET_KEY: ${env:JWT_SECRET_KEY}
+    package:
+      include:
+        - api/auth/**
+    events:
+      - http:
+          path: login
+          method: post
   createUser:
     handler: api/users/handler.create
     description: "Get a single user"
@@ -63,6 +101,9 @@ functions:
       - http:
           path: users/create
           method: post
+          authorizer:
+            name: adminAuthorizer
+            resultTtlInSeconds: 0
   getUser:
     handler: api/users/handler.get
     description: "Get a single user"
@@ -75,6 +116,9 @@ functions:
       - http:
           path: user/{userId}
           method: get
+          authorizer:
+            name: adminAuthorizer
+            resultTtlInSeconds: 0
   removeUser:
     handler: api/users/handler.remove
     description: "List all users function"
@@ -87,6 +131,9 @@ functions:
       - http:
           path: users/remove
           method: post
+          authorizer:
+            name: adminAuthorizer
+            resultTtlInSeconds: 0
   updateUser:
     handler: api/users/handler.update
     description: "List all users function"
@@ -99,6 +146,9 @@ functions:
       - http:
           path: users/update
           method: post
+          authorizer:
+            name: adminAuthorizer
+            resultTtlInSeconds: 0
   listUsers:
     handler: api/users/handler.list
     description: "List all users function"
@@ -111,3 +161,6 @@ functions:
       - http:
           path: users
           method: get
+          authorizer:
+            name: adminAuthorizer
+            resultTtlInSeconds: 0
