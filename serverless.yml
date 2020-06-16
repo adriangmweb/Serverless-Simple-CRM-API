@@ -31,7 +31,13 @@ provider:
 package:
   individually: true
   exclude:
-    - ./*
+    - ./**
+  include:
+    - config/*
+    - database/models/*
+    - lib/*
+    - helpers/*
+    - services/*
 
 layers:
   APINodeModules:
