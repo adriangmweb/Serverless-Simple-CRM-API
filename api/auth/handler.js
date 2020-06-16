@@ -1,7 +1,38 @@
 'use strict';
 const { errorReporter } = require('../../helpers')
-const { comparePassword, signToken } = require('./helpers')
+const { comparePassword, generatePolicy, signToken, validateToken } = require('./helpers')
 const { login } = require('./actions')
+
+module.exports.adminAuth = async (event, context, callback) => {
+  if (!event.authorizationToken) {
+    return callback('Unauthorized')
+  }
+
+  try {
+    const [prefix, token] = event.authorizationToken.split(' ')
+    const { userId, isAdmin } = validateToken(token)
+    if (isAdmin) {
+      return generatePolicy(userId, 'Allow', event.methodArn)
+    }
+    return generatePolicy(userId, 'Deny', event.methodArn)
+  } catch (error) {
+    return callback('Unauthorized')
+  }
+}
+
+module.exports.auth = async (event, context, callback) => {
+  if (!event.authorizationToken) {
+    return callback('Unauthorized')
+  }
+
+  try {
+    const [prefix, token] = event.authorizationToken.split(' ')
+    const { userId } = validateToken(token)
+    return generatePolicy(userId, 'Allow', event.methodArn)
+  } catch (error) {
+    return callback('Unauthorized')
+  }
+}
 
 module.exports.login = async (event) => {
   try {
