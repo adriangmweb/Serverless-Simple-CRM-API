@@ -51,6 +51,30 @@ layers:
     description: Layer including CRM API production node modules
 
 functions:
+  adminAuthorizer:
+    handler: api/auth/handler.adminAuth
+    description: Authorizer function
+    layers:
+      - { Ref: APINodeModulesLambdaLayer }
+    environment:
+      JWT_SECRET_KEY: ${env:JWT_SECRET_KEY}
+    package:
+      include:
+        - api/auth/**
+      exclude:
+        - /**
+  userAuthorizer:
+    handler: api/auth/handler.auth
+    description: Authorizer function
+    layers:
+      - { Ref: APINodeModulesLambdaLayer }
+    environment:
+      JWT_SECRET_KEY: ${env:JWT_SECRET_KEY}
+    package:
+      include:
+        - api/auth/**
+      exclude:
+        - /**
   login:
     handler: api/auth/handler.login
     description: Login function
