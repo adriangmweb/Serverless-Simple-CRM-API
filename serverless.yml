@@ -164,6 +164,21 @@ functions:
           authorizer:
             name: adminAuthorizer
             resultTtlInSeconds: 0
+  createCustomer:
+    handler: api/customers/handler.create
+    description: "Creates a new customer"
+    layers:
+      - { Ref: APINodeModulesLambdaLayer }
+    package:
+      include:
+        - api/customers/**
+    events:
+      - http:
+          path: customers/create
+          method: post
+          authorizer:
+            name: userAuthorizer
+            resultTtlInSeconds: 0
   getCustomer:
     handler: api/customers/handler.get
     description: "Gets a single customer"
@@ -176,6 +191,36 @@ functions:
       - http:
           path: customer/{customerId}
           method: get
+          authorizer:
+            name: userAuthorizer
+            resultTtlInSeconds: 0
+  removeCustomer:
+    handler: api/customers/handler.remove
+    description: "Removes a single customer"
+    layers:
+      - { Ref: APINodeModulesLambdaLayer }
+    package:
+      include:
+        - api/customers/**
+    events:
+      - http:
+          path: customers/remove
+          method: post
+          authorizer:
+            name: userAuthorizer
+            resultTtlInSeconds: 0
+  updateCustomer:
+    handler: api/customers/handler.update
+    description: "Updates a single customer"
+    layers:
+      - { Ref: APINodeModulesLambdaLayer }
+    package:
+      include:
+        - api/customers/**
+    events:
+      - http:
+          path: customers/update
+          method: post
           authorizer:
             name: userAuthorizer
             resultTtlInSeconds: 0
