@@ -53,7 +53,7 @@ layers:
 functions:
   adminAuthorizer:
     handler: api/auth/handler.adminAuth
-    description: Authorizer function
+    description: Authorizer function for admins
     layers:
       - { Ref: APINodeModulesLambdaLayer }
     environment:
@@ -65,7 +65,7 @@ functions:
         - /**
   userAuthorizer:
     handler: api/auth/handler.auth
-    description: Authorizer function
+    description: Authorizer function for logged users
     layers:
       - { Ref: APINodeModulesLambdaLayer }
     environment:
@@ -91,7 +91,7 @@ functions:
           method: post
   createUser:
     handler: api/users/handler.create
-    description: "Get a single user"
+    description: "Creates a new user"
     layers:
       - { Ref: APINodeModulesLambdaLayer }
     package:
@@ -106,7 +106,7 @@ functions:
             resultTtlInSeconds: 0
   getUser:
     handler: api/users/handler.get
-    description: "Get a single user"
+    description: "Gets a single user"
     layers:
       - { Ref: APINodeModulesLambdaLayer }
     package:
@@ -121,7 +121,7 @@ functions:
             resultTtlInSeconds: 0
   removeUser:
     handler: api/users/handler.remove
-    description: "List all users function"
+    description: "Removes a single user"
     layers:
       - { Ref: APINodeModulesLambdaLayer }
     package:
@@ -136,7 +136,7 @@ functions:
             resultTtlInSeconds: 0
   updateUser:
     handler: api/users/handler.update
-    description: "List all users function"
+    description: "Updates a single user"
     layers:
       - { Ref: APINodeModulesLambdaLayer }
     package:
@@ -151,7 +151,7 @@ functions:
             resultTtlInSeconds: 0
   listUsers:
     handler: api/users/handler.list
-    description: "List all users function"
+    description: "List all users"
     layers:
       - { Ref: APINodeModulesLambdaLayer }
     package:
