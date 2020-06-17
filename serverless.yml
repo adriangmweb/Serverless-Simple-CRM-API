@@ -164,3 +164,33 @@ functions:
           authorizer:
             name: adminAuthorizer
             resultTtlInSeconds: 0
+  getCustomer:
+    handler: api/customers/handler.get
+    description: "Gets a single customer"
+    layers:
+      - { Ref: APINodeModulesLambdaLayer }
+    package:
+      include:
+        - api/customers/**
+    events:
+      - http:
+          path: customer/{customerId}
+          method: get
+          authorizer:
+            name: userAuthorizer
+            resultTtlInSeconds: 0
+  listCustomers:
+    handler: api/customers/handler.list
+    description: "Lists all customers"
+    layers:
+      - { Ref: APINodeModulesLambdaLayer }
+    package:
+      include:
+        - api/customers/**
+    events:
+      - http:
+          path: customers
+          method: get
+          authorizer:
+            name: userAuthorizer
+            resultTtlInSeconds: 0
