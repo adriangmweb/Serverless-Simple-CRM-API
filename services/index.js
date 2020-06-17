@@ -25,9 +25,6 @@ module.exports.list = async (modelName) => {
   await controller.init()
 
   return controller.findAll(modelName, {
-    include: {
-      all: true
-    },
     attributes: { exclude: ['password'] }
   })
 }
