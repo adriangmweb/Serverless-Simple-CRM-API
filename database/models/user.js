@@ -26,6 +26,14 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: false
     }
   }, {});
+  User.associate = function (models) {
+    User.hasMany(models.Customer, {
+      foreignKey: 'createdBy',
+    });
+    User.hasMany(models.Customer, {
+      foreignKey: 'updatedBy',
+    });
+  };
   User.beforeCreate(async (user) => {
     const hashedPassword = await hashPassword(user.password);
     user.password = hashedPassword;
