@@ -1,8 +1,13 @@
 service: serverless-simple-crm-api
 
 plugins:
+  - serverless-apigw-binary
   - serverless-dotenv-plugin
 custom:
+  apigwBinary:
+    types:
+      - 'multipart/form-data'
+      - 'image/jpeg'
   dotenv:
     logging: false
     include:
