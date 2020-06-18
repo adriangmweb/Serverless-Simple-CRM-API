@@ -95,7 +95,7 @@ module.exports.update = async (event) => {
       updatedBy: principalId
     }
 
-    const customerUpdated = await update(customerId, customerAttributes)
+    const [customerUpdated] = await update(customerId, customerAttributes)
 
     if (!customerId || !customerUpdated) {
       return errorReporter({
@@ -154,7 +154,7 @@ module.exports.upload = async (event) => {
       updatedBy: principalId
     }
 
-    const updated = await update(customerId, updatedAttributes)
+    const [updated] = await update(customerId, updatedAttributes)
 
     if (!updated) return errorReporter({ statusCode: 400, response: 'Could not update customer.' })
 
