@@ -3,16 +3,16 @@ A simple CRM Serverless API created with NodeJS, Serverless framework and stored
 
 ## Installation
 
-Run installation of dependencies.
+Install all dependencies.
 
 ```sh
 $ npm install
 ```
+### Set up API
 
-## Deployment
+Copy the `env.sample` filte content into an `.env` in the root of the project, and fill it with your AWS profile, MySQL Database credentials and custom environemnt variables.
 
-ENV:
- - dev
+In order to use a AWS profile you should have the aws cli installed and configured. You can follow this [instructions](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html) in case you need to set it up.
 
 Deploying all functions including resources
 
