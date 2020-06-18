@@ -233,6 +233,22 @@ functions:
           authorizer:
             name: Authorizer
             resultTtlInSeconds: ${self:provider.custom.resultTtlInSeconds}
+  uploadCustomerPhoto:
+    handler: api/customers/handler.upload
+    description: "Uploads and updates a single customer photo"
+    layers:
+      - { Ref: APINodeModulesLambdaLayer }
+    package:
+      include:
+        - api/customers/**
+    role: UploaderRole
+    events:
+      - http:
+          path: customer/{customerId}/upload
+          method: post
+          authorizer:
+            name: Authorizer
+            resultTtlInSeconds: ${self:provider.custom.resultTtlInSeconds}
 
 resources:
   Resources:
