@@ -1,24 +1,13 @@
 'use strict';
 const { errorReporter } = require('../../helpers')
-const { comparePassword, generatePolicy, signToken, validateToken } = require('./helpers')
 const { login } = require('./actions')
-
-module.exports.adminAuth = async (event, context, callback) => {
-  if (!event.authorizationToken) {
-    return callback('Unauthorized')
-  }
-
-  try {
-    const [prefix, token] = event.authorizationToken.split(' ')
-    const { id, isAdmin } = validateToken(token)
-    if (isAdmin) {
-      return generatePolicy(id, 'Allow', event.methodArn)
-    }
-    return generatePolicy(id, 'Deny', event.methodArn)
-  } catch (error) {
-    return callback('Unauthorized')
-  }
-}
+const {
+  comparePassword,
+  generatePolicy,
+  signToken,
+  validateToken,
+  isAdminEndpoint
+} = require('./helpers')
 
 module.exports.auth = async (event, context, callback) => {
   if (!event.authorizationToken) {
@@ -27,7 +16,13 @@ module.exports.auth = async (event, context, callback) => {
 
   try {
     const [prefix, token] = event.authorizationToken.split(' ')
-    const { id } = validateToken(token)
+    const { id, isAdmin } = validateToken(token)
+
+    if (isAdminEndpoint(event.methodArn)) {
+      const effect = (isAdmin) ? 'Allow' : 'Deny'
+      return generatePolicy(id, effect, event.methodArn)
+    }
+
     return generatePolicy(id, 'Allow', event.methodArn)
   } catch (error) {
     return callback('Unauthorized')

@@ -1,6 +1,9 @@
 'use strict';
+const multipart = require('parse-multipart')
 const { errorReporter } = require('../../helpers')
 const { get, list, create, remove, update } = require('./actions')
+const validateImage = require('./helpers/validateImage')
+const uploadImage = require('./actions/uploadImage')
 
 module.exports.get = async (event) => {
   try {
@@ -105,6 +108,61 @@ module.exports.update = async (event) => {
       statusCode: 200,
       body: JSON.stringify({
         customerUpdated: 'Customer successfully updated'
+      })
+    }
+  } catch (error) {
+    return errorReporter(error)
+  }
+}
+
+module.exports.upload = async (event) => {
+  try {
+    const { customerId = '' } = event.pathParameters
+    const { principalId } = event.requestContext.authorizer
+
+    const customer = await get(customerId)
+
+    if (!customer) {
+      return errorReporter({
+        statusCode: 404,
+        response: 'Customer not found'
+      })
+    }
+
+    const bodyBuffer = new Buffer(event.body, 'base64')
+    const contentTypes = event.headers['Content-Type'] || event.headers['content-type']
+    const boundary = multipart.getBoundary(contentTypes)
+
+    const [ photo ] = multipart.Parse(bodyBuffer, boundary)
+
+
+    if (!validateImage(photo)) {
+      return errorReporter({
+        statusCode: 400,
+        response: 'Please upload a valid file'
+      })
+    }
+
+    const { data, type } = photo
+
+    const fileExtension = photo.filename.split('.').pop()
+    const filePath = `customers/${customerId}/profile.${fileExtension}`
+    const { Location: photoUrl } = await uploadImage(data, filePath, type)
+
+    const updatedAttributes = {
+      photo: photoUrl,
+      updatedBy: principalId
+    }
+
+    const updated = await update(customerId, updatedAttributes)
+
+    if (!updated) return errorReporter({ statusCode: 400, response: 'Could not update customer.' })
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        customer: customer.email,
+        photoUrl
       })
     }
   } catch (error) {
