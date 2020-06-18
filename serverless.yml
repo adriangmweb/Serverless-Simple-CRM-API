@@ -51,21 +51,9 @@ layers:
     description: Layer including CRM API production node modules
 
 functions:
-  adminAuthorizer:
-    handler: api/auth/handler.adminAuth
-    description: Authorizer function for admins
-    layers:
-      - { Ref: APINodeModulesLambdaLayer }
-    environment:
-      JWT_SECRET_KEY: ${env:JWT_SECRET_KEY}
-    package:
-      include:
-        - api/auth/**
-      exclude:
-        - /**
-  userAuthorizer:
+  Authorizer:
     handler: api/auth/handler.auth
-    description: Authorizer function for logged users
+    description: Authorizer function
     layers:
       - { Ref: APINodeModulesLambdaLayer }
     environment:
@@ -102,8 +90,8 @@ functions:
           path: users/create
           method: post
           authorizer:
-            name: adminAuthorizer
-            resultTtlInSeconds: 0
+            name: Authorizer
+            resultTtlInSeconds: ${self:provider.custom.resultTtlInSeconds}
   getUser:
     handler: api/users/handler.get
     description: "Gets a single user"
@@ -117,8 +105,8 @@ functions:
           path: user/{userId}
           method: get
           authorizer:
-            name: adminAuthorizer
-            resultTtlInSeconds: 0
+            name: Authorizer
+            resultTtlInSeconds: ${self:provider.custom.resultTtlInSeconds}
   removeUser:
     handler: api/users/handler.remove
     description: "Removes a single user"
@@ -132,8 +120,8 @@ functions:
           path: users/remove
           method: post
           authorizer:
-            name: adminAuthorizer
-            resultTtlInSeconds: 0
+            name: Authorizer
+            resultTtlInSeconds: ${self:provider.custom.resultTtlInSeconds}
   updateUser:
     handler: api/users/handler.update
     description: "Updates a single user"
@@ -147,8 +135,8 @@ functions:
           path: users/update
           method: post
           authorizer:
-            name: adminAuthorizer
-            resultTtlInSeconds: 0
+            name: Authorizer
+            resultTtlInSeconds: ${self:provider.custom.resultTtlInSeconds}
   listUsers:
     handler: api/users/handler.list
     description: "List all users"
@@ -162,8 +150,8 @@ functions:
           path: users
           method: get
           authorizer:
-            name: adminAuthorizer
-            resultTtlInSeconds: 0
+            name: Authorizer
+            resultTtlInSeconds: ${self:provider.custom.resultTtlInSeconds}
   createCustomer:
     handler: api/customers/handler.create
     description: "Creates a new customer"
@@ -177,8 +165,8 @@ functions:
           path: customers/create
           method: post
           authorizer:
-            name: userAuthorizer
-            resultTtlInSeconds: 0
+            name: Authorizer
+            resultTtlInSeconds: ${self:provider.custom.resultTtlInSeconds}
   getCustomer:
     handler: api/customers/handler.get
     description: "Gets a single customer"
@@ -192,8 +180,8 @@ functions:
           path: customer/{customerId}
           method: get
           authorizer:
-            name: userAuthorizer
-            resultTtlInSeconds: 0
+            name: Authorizer
+            resultTtlInSeconds: ${self:provider.custom.resultTtlInSeconds}
   removeCustomer:
     handler: api/customers/handler.remove
     description: "Removes a single customer"
@@ -207,8 +195,8 @@ functions:
           path: customers/remove
           method: post
           authorizer:
-            name: userAuthorizer
-            resultTtlInSeconds: 0
+            name: Authorizer
+            resultTtlInSeconds: ${self:provider.custom.resultTtlInSeconds}
   updateCustomer:
     handler: api/customers/handler.update
     description: "Updates a single customer"
@@ -222,8 +210,8 @@ functions:
           path: customers/update
           method: post
           authorizer:
-            name: userAuthorizer
-            resultTtlInSeconds: 0
+            name: Authorizer
+            resultTtlInSeconds: ${self:provider.custom.resultTtlInSeconds}
   listCustomers:
     handler: api/customers/handler.list
     description: "Lists all customers"
@@ -237,5 +225,5 @@ functions:
           path: customers
           method: get
           authorizer:
-            name: userAuthorizer
-            resultTtlInSeconds: 0
+            name: Authorizer
+            resultTtlInSeconds: ${self:provider.custom.resultTtlInSeconds}
