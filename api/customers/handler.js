@@ -129,7 +129,7 @@ module.exports.upload = async (event) => {
       })
     }
 
-    const bodyBuffer = new Buffer(event.body, 'base64')
+    const bodyBuffer = Buffer.from(event.body, 'base64')
     const contentTypes = event.headers['Content-Type'] || event.headers['content-type']
     const boundary = multipart.getBoundary(contentTypes)
 
