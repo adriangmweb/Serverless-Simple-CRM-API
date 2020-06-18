@@ -78,8 +78,7 @@ module.exports.update = async (event) => {
 
     const { id: userId = '', ...attributes } = JSON.parse(event.body)
 
-    const userUpdated = await update(userId, attributes)
-
+    const [userUpdated] = await update(userId, attributes)
     if (!userId || !userUpdated) {
       return errorReporter({
         statusCode: 404,

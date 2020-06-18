@@ -1,9 +1,10 @@
 {
   "name": "serverless-simple-crm-api",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Simple CRM Serverless API",
   "scripts": {
-    "deploy": "npx serverless deploy -s",
+    "sls-deploy": "npx serverless deploy -s",
+    "deploy": "./.bin/prepareLayer.sh && npx serverless deploy -s",
     "prepare-layer": "./.bin/prepareLayer.sh",
     "local": "npx serverless invoke local -f",
     "test": "echo \"Error: no test specified\" && exit 1"
