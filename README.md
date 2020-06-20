@@ -55,8 +55,8 @@ POST /login
 Body
 ```
 {
-	"email": "michaelscott@crm-api.com",
-	"password": "your password here"
+  "email": "michaelscott@crm-api.com",
+  "password": "your password here"
 }
 ```
 Response
@@ -126,10 +126,10 @@ GET /users/create
 Body
 ```
 {
-	"name": "Jim",
-	"lastName": "Halpert",
-	"email": "jimhalpert@crm-api.com",
-	"password": "your password here"
+  "name": "Jim",
+  "lastName": "Halpert",
+  "email": "jimhalpert@crm-api.com",
+  "password": "your password here"
 }
 ```
 Response
@@ -156,9 +156,9 @@ GET /users/update
 Body
 ```
 {
-	"id": 3,
-	"name": "James",
-	"isAdmin": true
+  "id": 3,
+  "name": "James",
+  "isAdmin": true
 }
 ```
 Response
@@ -176,7 +176,7 @@ GET /users/remove
 Body
 ```
 {
-	"id": 3
+  "id": 3
 }
 ```
 Response
