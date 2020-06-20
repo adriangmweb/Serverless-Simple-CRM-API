@@ -103,7 +103,7 @@ Response
 #### Get a single user
 Request
 ```
-GET /user/{id}
+GET /users/{id}
 ```
 Response
 ```
@@ -195,7 +195,7 @@ Customers includes the same endpoints as Users, except for the one below.
 #### Upload customer photo
 Request
 ```
-POST /customer/{customerId}/upload
+POST /customers/{customerId}/upload
 ```
 Body
 

@@ -108,7 +108,7 @@ functions:
         - api/users/**
     events:
       - http:
-          path: user/{userId}
+          path: users/{userId}
           method: get
           authorizer:
             name: Authorizer
@@ -183,7 +183,7 @@ functions:
         - api/customers/**
     events:
       - http:
-          path: customer/{customerId}
+          path: customers/{customerId}
           method: get
           authorizer:
             name: Authorizer
@@ -244,7 +244,7 @@ functions:
     role: UploaderRole
     events:
       - http:
-          path: customer/{customerId}/upload
+          path: customers/{customerId}/upload
           method: post
           authorizer:
             name: Authorizer
