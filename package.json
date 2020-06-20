@@ -1,13 +1,13 @@
 {
   "name": "serverless-simple-crm-api",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Simple CRM Serverless API",
   "scripts": {
     "sls-deploy": "npx serverless deploy -s",
     "deploy": "./.bin/prepareLayer.sh && npx serverless deploy -s",
     "prepare-layer": "./.bin/prepareLayer.sh",
     "local": "npx serverless invoke local -f",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx jest --forceExit --detectOpenHandles --verbose"
   },
   "keywords": [
     "nodejs",
@@ -18,6 +18,7 @@
   "license": "ISC",
   "devDependencies": {
     "aws-sdk": "^2.699.0",
+    "jest": "^26.0.1",
     "sequelize-cli": "^5.5.1",
     "serverless": "^1.72.0",
     "serverless-apigw-binary": "^0.4.4",
