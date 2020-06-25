@@ -1,6 +1,6 @@
 {
   "name": "serverless-simple-crm-api",
-  "version": "0.3.3",
+  "version": "1.0.0",
   "description": "Simple CRM Serverless API",
   "scripts": {
     "sls-deploy": "npx serverless deploy -s",
