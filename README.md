@@ -20,12 +20,12 @@ To be able to use the API with your dabatase, you need to have the CRM structure
 
 Run migrations to create tables structure and relations
 ```
-npx run sequelize db:migrate
+npx sequelize db:migrate
 ```
 
 Run seeds to create the first demo users and customers, to be able to start using the API.
 ```
-npx run sequelize db:seed:all
+npx sequelize db:seed:all
 ```
 
 Now you should have everything ready to deploy and start using the API.
